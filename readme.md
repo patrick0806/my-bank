@@ -17,6 +17,12 @@ To running this project in dev mode you need follow this steps
 
 ### 2 - Create your dot env file with this structure
 ```bash
+DB_DRIVER=postgres
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=my-bank
+DB_USER=root
+DB_PASSWORD=123
 API_PORT=:8080
 ```
 
