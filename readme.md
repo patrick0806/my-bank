@@ -64,3 +64,6 @@ I'm creating this project to learn more about go.
 There are some requirements for things I want to implement that I consider basic in any API, such as documentation (swagger), tests and logs
 
 I'm also going to do my best to do everything with just the golang standard library, because I want to master the stack before delving into libs that the community uses a lot like GIN.
+
+### Swagger route
+http://localhost:8080/docs/index.html

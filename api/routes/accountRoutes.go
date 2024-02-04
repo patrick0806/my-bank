@@ -1,15 +1,14 @@
 package routes
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/patrick0806/my-bank/api/controllers"
+	"github.com/patrick0806/my-bank/internal/usecases"
 )
 
 func AddAccountsRoutes(rg *gin.RouterGroup) {
 	accountRouter := rg.Group("/accounts")
+	accountController := controllers.NewControllerAccount(usecases.CreateAccountUseCase{})
 
-	accountRouter.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "{\"amigo\":\"estou aqui\"}")
-	})
+	accountRouter.POST("/", accountController.CreateAccount)
 }
