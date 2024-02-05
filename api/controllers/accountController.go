@@ -26,16 +26,20 @@ func NewControllerAccount(createAccountUseCase usecases.CreateAccountUseCase) *A
 // @Accept json
 // @Produce json
 // @Param account body usecases.CreateAccountRequestDTO true "Create account parameters"
-// @Success 200 {object} usecases.CreateAccountResponseDTO
+// @Success 201 {object} usecases.CreateAccountResponseDTO
 // @Failure      400  {object}  dtos.HttpErrorDTO
-// @Failure      404  {object}  dtos.HttpErrorDTO
+// @Failure      409  {object}  dtos.HttpErrorDTO
 // @Failure      500  {object}  dtos.HttpErrorDTO
 // @Router       /accounts [post]
 func (ac *AccountController) CreateAccount(ctx *gin.Context) {
 	requestDTO := usecases.CreateAccountRequestDTO{}
 	err := ctx.ShouldBindJSON(&requestDTO)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err)
+		ctx.JSON(http.StatusBadRequest, &dtos.HttpErrorDTO{
+			StatusCode: 400,
+			Reason:     err.Error(),
+			Timestamp:  time.Now(),
+		})
 		return
 	}
 
@@ -43,9 +47,10 @@ func (ac *AccountController) CreateAccount(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &dtos.HttpErrorDTO{
 			StatusCode: 400,
-			Reason:     "Alguma coisa",
+			Reason:     err.Error(),
 			Timestamp:  time.Now(),
 		})
+		return
 	}
-	ctx.JSON(http.StatusOK, createdAccountDTO)
+	ctx.JSON(http.StatusCreated, createdAccountDTO)
 }

@@ -1,11 +1,15 @@
 package main
 
 import (
+	"database/sql"
 	"flag"
+	"fmt"
+	"log"
+	"os"
 
+	_ "github.com/lib/pq"
 	"github.com/patrick0806/my-bank/api"
 	"github.com/patrick0806/my-bank/config"
-	"github.com/patrick0806/my-bank/config/database"
 	_ "github.com/patrick0806/my-bank/docs"
 )
 
@@ -26,6 +30,19 @@ func main() {
 	env := flag.String("env", "PRODUCTION", "Environment to run api")
 	flag.Parse()
 	configs := config.LoadEnvVars(*env)
-	database.GetDB()
-	api.Run(configs.API_PORT)
+
+	db, err := sql.Open(os.Getenv("DB_DRIVER"), fmt.Sprintf("host=%s port=%s user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME")))
+
+	if err != nil {
+		log.Fatalf("Failt to open connection with database", err)
+	}
+	defer db.Close()
+
+	api.Run(configs.API_PORT, db)
 }
