@@ -44,8 +44,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/usecases.CreateAccountResponseDTO"
                         }
@@ -56,8 +56,8 @@ const docTemplate = `{
                             "$ref": "#/definitions/dtos.HttpErrorDTO"
                         }
                     },
-                    "404": {
-                        "description": "Not Found",
+                    "409": {
+                        "description": "Conflict",
                         "schema": {
                             "$ref": "#/definitions/dtos.HttpErrorDTO"
                         }
@@ -87,26 +87,6 @@ const docTemplate = `{
                 }
             }
         },
-        "usecases.ClientDTO": {
-            "type": "object",
-            "properties": {
-                "birthdate": {
-                    "type": "string"
-                },
-                "cpf": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "phoneNumber": {
-                    "type": "string"
-                }
-            }
-        },
         "usecases.CreateAccountRequestDTO": {
             "type": "object",
             "properties": {
@@ -131,12 +111,24 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "balance": {
+                    "type": "number"
+                },
+                "birthdate": {
                     "type": "string"
                 },
-                "client": {
-                    "$ref": "#/definitions/usecases.ClientDTO"
+                "cpf": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
                 },
                 "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phoneNumber": {
                     "type": "string"
                 }
             }

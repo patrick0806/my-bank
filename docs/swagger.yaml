@@ -9,19 +9,6 @@ definitions:
       timestamp:
         type: string
     type: object
-  usecases.ClientDTO:
-    properties:
-      birthdate:
-        type: string
-      cpf:
-        type: string
-      email:
-        type: string
-      name:
-        type: string
-      phoneNumber:
-        type: string
-    type: object
   usecases.CreateAccountRequestDTO:
     properties:
       birthdate:
@@ -38,10 +25,18 @@ definitions:
   usecases.CreateAccountResponseDTO:
     properties:
       balance:
+        type: number
+      birthdate:
         type: string
-      client:
-        $ref: '#/definitions/usecases.ClientDTO'
+      cpf:
+        type: string
+      email:
+        type: string
       id:
+        type: string
+      name:
+        type: string
+      phoneNumber:
         type: string
     type: object
 info:
@@ -68,16 +63,16 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/usecases.CreateAccountResponseDTO'
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/dtos.HttpErrorDTO'
-        "404":
-          description: Not Found
+        "409":
+          description: Conflict
           schema:
             $ref: '#/definitions/dtos.HttpErrorDTO'
         "500":
