@@ -13,6 +13,7 @@ type CreateAccountRequestDTO struct {
 	Name        string `json:"name"`
 	CPF         string `json:"cpf"`
 	Email       string `json:"email"`
+	Password    string `json:"password"`
 	PhoneNumber string `json:"phoneNumber"`
 	Birthdate   string `json:"birthdate"`
 }
@@ -52,12 +53,18 @@ func (us *CreateAccountUseCase) Execute(accountDTO CreateAccountRequestDTO) (*Cr
 		return nil, err
 	}
 
+	hash, err := utils.HashPassword(accountDTO.Password)
+	if err != nil {
+		return nil, err
+	}
+
 	newAccount := &entities.Account{
 		Id:          entity.NewID(),
 		Balance:     0.00,
 		Name:        accountDTO.Name,
 		CPF:         accountDTO.CPF,
 		Email:       accountDTO.Email,
+		Password:    hash,
 		PhoneNumber: accountDTO.PhoneNumber,
 		Birthdate:   *birthdate,
 	}

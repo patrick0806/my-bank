@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS accounts(
     birthdate date NOT NULL,
     cpf varchar(11) NOT NULL,
     email varchar(50) NOT NULL,
+    password varchar(255) NOT NULL,
     phone_number varchar(20) NOT NULL
 );

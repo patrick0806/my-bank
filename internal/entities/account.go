@@ -10,6 +10,7 @@ type Account struct {
 	Id          entity.ID
 	Balance     float64
 	Name        string
+	Password    string
 	CPF         string
 	Email       string
 	PhoneNumber string
