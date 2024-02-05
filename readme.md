@@ -24,6 +24,7 @@ DB_NAME=my-bank
 DB_USER=root
 DB_PASSWORD=123
 API_PORT=:8080
+JWT_SECRET_KEY=batata
 ```
 
 ### 3 - Create and running local database

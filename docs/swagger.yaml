@@ -58,6 +58,18 @@ definitions:
       phoneNumber:
         type: string
     type: object
+  usecases.SignRequestDTO:
+    properties:
+      cpf:
+        type: string
+      password:
+        type: string
+    type: object
+  usecases.SignResponseDTO:
+    properties:
+      accessToken:
+        type: string
+    type: object
 info:
   contact:
     email: patrick@mybank.com.br
@@ -136,4 +148,38 @@ paths:
       summary: Find account by CPF
       tags:
       - Accounts
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: Login in api with cpf and password
+      parameters:
+      - description: Login params
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/usecases.SignRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usecases.SignResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.HttpErrorDTO'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dtos.HttpErrorDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.HttpErrorDTO'
+      summary: Login
+      tags:
+      - Auth
 swagger: "2.0"
