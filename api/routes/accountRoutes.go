@@ -11,10 +11,12 @@ import (
 
 func AddAccountsRoutes(rg *gin.RouterGroup, db *sql.DB) {
 	accountDatasource := datasources.AccountDatasource{DB: db}
+	createAccountUseCase := usecases.CreateAccountUseCase{AccountRepository: &accountDatasource}
+	findAccountByCPF := usecases.FindAccountByCPFUseCase{AccountRepository: &accountDatasource}
+
 	accountRouter := rg.Group("/accounts")
-	accountController := controllers.NewControllerAccount(usecases.CreateAccountUseCase{
-		AccountRepository: &accountDatasource,
-	})
+	accountController := controllers.NewControllerAccount(createAccountUseCase, findAccountByCPF)
 
 	accountRouter.POST("/", accountController.CreateAccount)
+	accountRouter.GET("/:cpf", accountController.FindAccountByCPF)
 }

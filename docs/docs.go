@@ -70,6 +70,56 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/accounts/{cpf}": {
+            "get": {
+                "description": "Find account using the Brazilian individual taxpayer registry identification number (CPF)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Find account by CPF",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Brazilian individual taxpayer registry identification number (CPF)",
+                        "name": "cpf",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account found successfully",
+                        "schema": {
+                            "$ref": "#/definitions/usecases.FindAccountByCPFResponseDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.HttpErrorDTO"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.HttpErrorDTO"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.HttpErrorDTO"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -111,6 +161,32 @@ const docTemplate = `{
             }
         },
         "usecases.CreateAccountResponseDTO": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "type": "number"
+                },
+                "birthdate": {
+                    "type": "string"
+                },
+                "cpf": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phoneNumber": {
+                    "type": "string"
+                }
+            }
+        },
+        "usecases.FindAccountByCPFResponseDTO": {
             "type": "object",
             "properties": {
                 "balance": {
