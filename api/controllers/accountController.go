@@ -71,6 +71,7 @@ func (ac *AccountController) CreateAccount(ctx *gin.Context) {
 // @Failure 404 {object} dtos.HttpErrorDTO
 // @Failure 500 {object} dtos.HttpErrorDTO
 // @Router /accounts/{cpf} [get]
+// @Security ApiKeyAuth
 func (ac *AccountController) FindAccountByCPF(ctx *gin.Context) {
 	createdAccountDTO, err := ac.FindAccountByCPFUseCase.Execute(ctx.Param("cpf"))
 	if err != nil {

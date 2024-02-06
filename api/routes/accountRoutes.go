@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/patrick0806/my-bank/api/controllers"
+	"github.com/patrick0806/my-bank/api/middlewares"
 	"github.com/patrick0806/my-bank/internal/usecases"
 	"github.com/patrick0806/my-bank/pkg/datasources"
 )
@@ -18,5 +19,5 @@ func AddAccountsRoutes(rg *gin.RouterGroup, db *sql.DB) {
 	accountController := controllers.NewControllerAccount(createAccountUseCase, findAccountByCPF)
 
 	accountRouter.POST("/", accountController.CreateAccount)
-	accountRouter.GET("/:cpf", accountController.FindAccountByCPF)
+	accountRouter.GET("/:cpf", middlewares.ValidateAccessToken, accountController.FindAccountByCPF)
 }

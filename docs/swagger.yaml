@@ -145,6 +145,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dtos.HttpErrorDTO'
+      security:
+      - ApiKeyAuth: []
       summary: Find account by CPF
       tags:
       - Accounts
@@ -163,16 +165,12 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/usecases.SignResponseDTO'
         "400":
           description: Bad Request
-          schema:
-            $ref: '#/definitions/dtos.HttpErrorDTO'
-        "404":
-          description: Not Found
           schema:
             $ref: '#/definitions/dtos.HttpErrorDTO'
         "500":
@@ -182,4 +180,9 @@ paths:
       summary: Login
       tags:
       - Auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: accessToken
+    type: apiKey
 swagger: "2.0"

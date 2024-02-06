@@ -20,10 +20,10 @@ import (
 // @contact.name My bank support
 // @contact.url mybank.com.br
 // @contact.email patrick@mybank.com.br
-
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name accessToken
 /*
-// @securityDefinitions.basic  BasicAuth
-
 // @externalDocs.description  OpenAPI
 */
 func main() {

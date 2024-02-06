@@ -73,6 +73,11 @@ const docTemplate = `{
         },
         "/accounts/{cpf}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Find account using the Brazilian individual taxpayer registry identification number (CPF)",
                 "consumes": [
                     "application/json"
@@ -146,20 +151,14 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/usecases.SignResponseDTO"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/dtos.HttpErrorDTO"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/dtos.HttpErrorDTO"
                         }
@@ -282,6 +281,13 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "accessToken",
+            "in": "header"
         }
     }
 }`

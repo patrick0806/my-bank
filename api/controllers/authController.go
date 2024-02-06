@@ -28,7 +28,6 @@ func NewAuthController(signInUseCase usecases.SignInUseCase) *AuthController {
 // @Param account body usecases.SignRequestDTO true "Login params"
 // @Success 201 {object} usecases.SignResponseDTO
 // @Failure      400  {object}  dtos.HttpErrorDTO
-// @Failure      404  {object}  dtos.HttpErrorDTO
 // @Failure      500  {object}  dtos.HttpErrorDTO
 // @Router       /auth [post]
 func (ac *AuthController) SignIn(ctx *gin.Context) {
