@@ -46,3 +46,39 @@ func (ad *AccountDatasource) CreateAccount(account *entities.Account) error {
 	}
 	return nil
 }
+
+func (ad *AccountDatasource) FindById(id string) (*entities.Account, error) {
+	statement, err := ad.DB.Prepare("SELECT id, balance, name, birthdate, cpf, email, password, phone_number FROM accounts WHERE cpf = $1")
+	if err != nil {
+		return nil, err
+	}
+	defer statement.Close()
+
+	var account entities.Account
+
+	err = statement.
+		QueryRow(id).
+		Scan(&account.Id, &account.Balance, &account.Name, &account.Birthdate, &account.CPF, &account.Email, &account.Password, &account.PhoneNumber)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return &account, nil
+}
+
+func (ad *AccountDatasource) UpdateBalance(id string, balance float64) error {
+	statement, err := ad.DB.Prepare("UPDATE acccounts SET balance = $1 WHERE accounts.id '$2'")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	_, err = statement.Exec(balance, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

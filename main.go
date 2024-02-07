@@ -44,7 +44,7 @@ func main() {
 		log.Fatalf("Failt to open connection with database", err)
 	}
 	defer db.Close()
-	queue := queues.NewTransactionQueue()
+	queue := queues.NewTransactionQueue(db)
 	// Iniciar a goroutine para processar as transações em segundo plano
 	go queue.ProcessTransactions()
 
