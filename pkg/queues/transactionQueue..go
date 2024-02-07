@@ -1,14 +1,15 @@
 package queues
 
 import (
-	"sync"
+	"fmt"
 
 	"github.com/patrick0806/my-bank/internal/entities"
 )
 
+var signalChan = make(chan struct{})
+
 type TransactionQueue struct {
 	transactions []entities.Transaction
-	mu           sync.Mutex
 }
 
 func NewTransactionQueue() *TransactionQueue {
@@ -18,15 +19,11 @@ func NewTransactionQueue() *TransactionQueue {
 }
 
 func (q *TransactionQueue) Enqueue(t entities.Transaction) {
-	q.mu.Lock()
-	defer q.mu.Unlock()
 	q.transactions = append(q.transactions, t)
+	signalChan <- struct{}{}
 }
 
 func (q *TransactionQueue) Dequeue() (entities.Transaction, bool) {
-	q.mu.Lock()
-	defer q.mu.Unlock()
-
 	if len(q.transactions) == 0 {
 		return entities.Transaction{}, false
 	}
@@ -34,4 +31,18 @@ func (q *TransactionQueue) Dequeue() (entities.Transaction, bool) {
 	transaction := q.transactions[0]
 	q.transactions = q.transactions[1:]
 	return transaction, true
+}
+
+func (q *TransactionQueue) ProcessTransactions() {
+	for {
+		transaction, ok := q.Dequeue()
+		if !ok {
+			<-signalChan
+			continue
+		}
+		// Processar a transação aqui...
+		fmt.Printf("Processing transaction ID: %s\n", transaction.Id.String())
+		// Por exemplo, você pode salvar a transação no banco de dados aqui
+		// ou publicar a transação em outro sistema.
+	}
 }
