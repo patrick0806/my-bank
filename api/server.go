@@ -21,4 +21,5 @@ func getRoutes(router *gin.Engine, db *sql.DB) {
 	v1 := router.Group("api/v1")
 	routes.AddAuthRoutes(v1, db)
 	routes.AddAccountsRoutes(v1, db)
+	routes.AddTransacationRoutes(v1, db)
 }

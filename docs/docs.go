@@ -171,6 +171,54 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/transactions": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add a bank transacation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Create Transacation",
+                "parameters": [
+                    {
+                        "description": "Transaction details",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usecases.TransactionRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.HttpErrorDTO"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.HttpErrorDTO"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -279,6 +327,20 @@ const docTemplate = `{
             "properties": {
                 "accessToken": {
                     "type": "string"
+                }
+            }
+        },
+        "usecases.TransactionRequestDTO": {
+            "type": "object",
+            "properties": {
+                "accountDestiny": {
+                    "type": "string"
+                },
+                "accountOrigin": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
                 }
             }
         }

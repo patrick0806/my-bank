@@ -70,6 +70,15 @@ definitions:
       accessToken:
         type: string
     type: object
+  usecases.TransactionRequestDTO:
+    properties:
+      accountDestiny:
+        type: string
+      accountOrigin:
+        type: string
+      value:
+        type: number
+    type: object
 info:
   contact:
     email: patrick@mybank.com.br
@@ -180,6 +189,36 @@ paths:
       summary: Login
       tags:
       - Auth
+  /transactions:
+    post:
+      consumes:
+      - application/json
+      description: Add a bank transacation
+      parameters:
+      - description: Transaction details
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/usecases.TransactionRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.HttpErrorDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.HttpErrorDTO'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Transacation
+      tags:
+      - Transactions
 securityDefinitions:
   ApiKeyAuth:
     in: header
