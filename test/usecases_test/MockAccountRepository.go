@@ -21,3 +21,10 @@ func (m *MockAccountRepository) CreateAccount(accountData *entities.Account) err
 	args := m.Called(accountData)
 	return args.Error(0)
 }
+
+func (m *MockAccountRepository) UpdateBalance(id string, balance float64) error {
+	return nil
+}
+func (m *MockAccountRepository) FindById(id string) (*entities.Account, error) {
+	return nil, nil
+}
