@@ -42,7 +42,5 @@ func (q *TransactionQueue) ProcessTransactions() {
 		}
 		// Processar a transação aqui...
 		fmt.Printf("Processing transaction ID: %s\n", transaction.Id.String())
-		// Por exemplo, você pode salvar a transação no banco de dados aqui
-		// ou publicar a transação em outro sistema.
 	}
 }
